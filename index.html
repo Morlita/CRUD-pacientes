@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <title>Biopsies CRUD</title>
+</head>
+
+<body>
+    <h1 class="text-center p-4">CASOS LABORATORIO</h1>
+    <!-- Button trigger modal -->
+    <div class="container">
+        <div class="text-right pb-2">
+            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalAgregarCaso">
+                Agregar casos
+            </button>
+        </div>
+        <table class="table table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Biopsia N°</th>
+                    <th scope="col">Paciente</th>
+                    <th scope="col">Inmunohistoquímica</th>
+                    <th scope="col">Estado</th>
+                    <th scope="col">Notas</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="table-contents">
+
+            </tbody>
+        </table>
+    </div>
+
+
+
+    <!-- Modal de nuevo caso-->
+    <div class="modal fade" id="modalAgregarCaso" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Caso nuevo</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="myForm">
+                        <div class="form-group">
+                            <label for="formGroupExampleInput">Número de caso</label>
+                            <input type="text" class="form-control" id="num" placeholder="L00000">
+                        </div>
+                        <div class="form-group">
+                            <label for="formGroupExampleInput2">Apellido</label>
+                            <input type="text" class="form-control" id="apellido" placeholder="Ej: Pérez">
+                        </div>
+                        <div class="form-group">
+                            <label for="formGroupExampleInput2">Inmunohistoquímica</label>
+                            <input type="text" class="form-control" id="inmuno" placeholder="Ej: CK5, Napsina...">
+                        </div>
+                        <div class="form-group">
+                            <label for="formGroupExampleInput2">Estado</label>
+                            <input type="text" class="form-control" id="estado" placeholder="Ej: Escrito, No escrito">
+                        </div>
+                        <div class="form-group">
+                            <label for="formGroupExampleInput2">Notas</label>
+                            <input type="text" class="form-control" id="notas" placeholder="Agregar nota">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <!-- agregue el data/dismiss para que se cierre cuendo damos enviar -->
+                    <button type="button" class="btn btn-info" data-dismiss="modal"
+                        onclick="agregarCaso();">Agregar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal de cambio de datos-->
+    <div class="modal fade" id="modalEditarCaso" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Editar Caso</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="myForm2">
+                        <div class="form-group">
+                            <label for="formGroupExampleInput">Número de caso</label>
+                            <input type="text" class="form-control" id="numM" placeholder="L00000">
+                        </div>
+                        <div class="form-group">
+                            <label for="formGroupExampleInput2">Apellido</label>
+                            <input type="text" class="form-control" id="apellidoM" placeholder="Ej: Pérez">
+                        </div>
+                        <div class="form-group">
+                            <label for="formGroupExampleInput2">Inmunohistoquímica</label>
+                            <input type="text" class="form-control" id="inmunoM" placeholder="Ej: CK5, Napsina...">
+                        </div>
+                        <div class="form-group">
+                            <label for="formGroupExampleInput2">Estado</label>
+                            <input type="text" class="form-control" id="estadoM" placeholder="Ej: Escrito, No escrito">
+                        </div>
+                        <div class="form-group">
+                            <label for="formGroupExampleInput2">Notas</label>
+                            <input type="text" class="form-control" id="notasM" placeholder="Agregar nota">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <!-- agregue el data/dismiss para que se cierre cuendo damos enviar -->
+                    <button type="button" class="btn btn-info" data-dismiss="modal" id="modifModal">Modificar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>
